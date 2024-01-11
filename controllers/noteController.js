@@ -63,8 +63,14 @@ const deleteNote = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   const queryString = "DELETE FROM notes WHERE id = $1 RETURNING *";
-  await pool.query(queryString, [id]);
-  res.status(200).json({ msg: "Todo deleted Successfully!!" });
+  const { rows } = await pool.query(queryString, [id]);
+
+  if (rows.length === 0) {
+    res.status(404);
+    throw new Error(`Todo doesn't exist for id - ${id}`);
+  } else {
+    res.status(200).json({ msg: "Todo deleted Successfully!!", ...rows[0] });
+  }
 });
 
 module.exports = {
