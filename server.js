@@ -7,6 +7,9 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
+// Client build
+app.use(express.static("client/build"));
+
 // Routes
 app.use("/api/note", require("./routes/note"));
 app.use("/api/user", require("./routes/user"));
