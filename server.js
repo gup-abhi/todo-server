@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const { errorHandler } = require("./middleware/errorMiddleware");
 const cors = require("cors");
+require("./cron/cronJob");
 
 // Middleware
 app.use(express.json());
